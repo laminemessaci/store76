@@ -1,0 +1,29 @@
+{
+  "name": "store76",
+  "version": "1.0.0",
+  "description": "Store in 76 for marie",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laminemessaci/store76.git"
+  },
+  "author": "lamine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/laminemessaci/store76/issues"
+  },
+  "homepage": "https://github.com/laminemessaci/store76#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.4.0",
+    "nodemon": "^2.0.20"
+  }
+}
