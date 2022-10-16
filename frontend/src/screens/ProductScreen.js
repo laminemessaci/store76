@@ -9,7 +9,6 @@ import {
   Row,
 } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import products from '../products.js';
 import Rating from '../components/Rating.js';
 import axios from 'axios';
 
