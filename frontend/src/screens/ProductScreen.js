@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -9,12 +9,23 @@ import {
   Row,
 } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import Rating from '../components/Rating.js';
 import products from '../products.js';
+import Rating from '../components/Rating.js';
+import axios from 'axios';
 
 const ProductScreen = () => {
   const { id } = useParams();
-  const product = products.find((p) => p._id === id);
+  //const product = products.find((p) => p._id === id);
+
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, []);
 
   return (
     <>
@@ -60,10 +71,11 @@ const ProductScreen = () => {
                   </Col>
                 </Row>
               </ListGroupItem>
-              <ListGroupItem>
+              <ListGroupItem className="d-grid gap-1">
                 <Button
-                  className="btn-block"
+                  variant="primary"
                   type="button"
+                  active
                   disabled={product.countInStock === 0}
                 >
                   Add to Cart
