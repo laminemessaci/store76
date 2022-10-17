@@ -3,14 +3,14 @@ import {
   Button,
   Card,
   Col,
+  Form,
   Image,
   ListGroup,
   ListGroupItem,
   Row,
 } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, Navigate } from 'react-router-dom';
 import Rating from '../components/Rating.js';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../actions/productActions.js';
 import Loader from '../components/Loader.js';
@@ -18,9 +18,19 @@ import Message from '../components/Message.js';
 
 const ProductScreen = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { error, loading, product } = productDetails;
+
+  const addToCartHandler = () => {
+    // history.push(`/cart/${id}?qty=${qty}`);
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
 
   useEffect(() => {
     dispatch(listProductDetails(id));
@@ -74,8 +84,31 @@ const ProductScreen = () => {
                     </Col>
                   </Row>
                 </ListGroupItem>
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Control
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {/* get quantity depending to count in Stock */}
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <option key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
+
                 <ListGroupItem className="d-grid gap-1">
                   <Button
+                    onClick={addToCartHandler}
                     variant="primary"
                     type="button"
                     active
