@@ -9,7 +9,7 @@ import {
   ListGroupItem,
   Row,
 } from 'react-bootstrap';
-import { Link, useNavigate, useParams, Navigate } from 'react-router-dom';
+import { Link, useNavigate, useParams} from 'react-router-dom';
 import Rating from '../components/Rating.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../actions/productActions.js';
