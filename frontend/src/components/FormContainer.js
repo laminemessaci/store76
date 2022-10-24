@@ -3,11 +3,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 const FormContainer = ({ children }) => {
   return (
-    <Container className="justufy-content-md-center">
+    <Container className="inline-flex  py-4  justify-content-center">
       <Row>
-        <Col xs={12} md={6}>
-          {children}
-        </Col>
+        <Col className="container-fluid">{children}</Col>
+        {/* <Col className="container-fluid"></Col> */}
       </Row>
     </Container>
   );
