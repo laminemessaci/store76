@@ -30,9 +30,9 @@ const PlaceOrderScreen = () => {
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
   cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
   cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
+    +cart.itemsPrice +
+    +cart.shippingPrice +
+    +cart.taxPrice
   ).toFixed(2);
 
   const orderCreate = useSelector((state) => state.orderCreate);
@@ -147,7 +147,7 @@ const PlaceOrderScreen = () => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {/* {error && <Message variant="danger">{error}</Message>} */}
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
