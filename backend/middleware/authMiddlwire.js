@@ -34,7 +34,8 @@ const protect = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized, no token');
   }
 });
-
+ 
+// As admin only
 const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
