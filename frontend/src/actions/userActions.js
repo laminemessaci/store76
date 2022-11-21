@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { ORDER_LIST_MY_RESET } from '../constants/orderConstants.js';
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
+  USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
+  USER_LIST_RESET,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -54,6 +57,10 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
 
   dispatch({ type: USER_LOGOUT });
+
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: ORDER_LIST_MY_RESET });
+  dispatch({ type: USER_LIST_RESET });
   document.location.href = '/login';
 };
 
