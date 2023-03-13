@@ -20,8 +20,8 @@ const SearchBox = () => {
   return (
     <Form
       onSubmit={submitHandler}
-      inline
-      className="mr-sm-2 ml-sm-5  d-flex flex-row"
+   
+      className="mr-sm-2 ml-sm-5   d-flex flex-row"
     >
       <Form.Control
         type="text"
