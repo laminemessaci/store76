@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Api is ranning ...');
+  res.send('Api is running ...');
 });
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
