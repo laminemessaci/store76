@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   authUser,
   deleteUser,
@@ -8,20 +8,23 @@ import {
   registerUser,
   updateUserProfile,
   updateUser,
-} from '../controllers/userController.js';
-import { admin, protect } from '../middleware/authMiddlwire.js';
+} from "../controllers/userController.js";
+import { admin, protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.route('/').post(registerUser).get(protect, admin, getUsers);
-//router.get('/', protect, getUsers);
-router.post('/login', authUser);
 router
-  .route('/profile')
+  .route("/")
+  .post(registerUser)
+  .get(protect, admin, getUsers);
+//router.get('/', protect, getUsers);
+router.post("/login", authUser);
+router
+  .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 router
-  .route('/:id')
+  .route("/:id")
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);

@@ -7,7 +7,7 @@ import Loader from '../components/Loader';
 
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 import { useNavigate } from 'react-router-dom';
-import { deleteProduct, listProducts } from '../actions/productActions.js';
+import { createProduct, deleteProduct, listProducts } from '../actions/productActions.js';
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -23,6 +23,14 @@ const ProductListScreen = ({ history, match }) => {
     success: successDelete,
   } = productDelete
 
+  const productCreate = useSelector((state) => state.productCreate)
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -33,13 +41,16 @@ const ProductListScreen = ({ history, match }) => {
       navigate('/login');
     }
     dispatch(listProducts())
-  }, [dispatch, navigate, userInfo, successDelete]);
+  }, [dispatch, navigate, userInfo, successDelete,successCreate, createdProduct,]);
 
    const deleteHandler = (id) => {
     if (window.confirm('Are you sure')) {
       dispatch(deleteProduct(id))
   
     }
+  }
+   const createProductHandler = () => {
+    dispatch(createProduct())
   }
 
   return (
@@ -49,13 +60,15 @@ const ProductListScreen = ({ history, match }) => {
           <h1>Products</h1>
         </Col>
         <Col className="text-right">
-          <Button className="my-3" onClick={() => console.log('create ')}>
+          <Button className="my-3" onClick={createProductHandler}>
             <i className="fas fa-plus"></i> Create Product
           </Button>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+       {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
 
       {loading ? (
         <Loader />
