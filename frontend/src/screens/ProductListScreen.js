@@ -7,13 +7,21 @@ import Loader from '../components/Loader';
 
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 import { useNavigate } from 'react-router-dom';
+import { deleteProduct, listProducts } from '../actions/productActions.js';
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
+  const { loading, error, products} = productList;
+
+    const productDelete = useSelector((state) => state.productDelete)
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -24,7 +32,15 @@ const ProductListScreen = ({ history, match }) => {
     if (!userInfo || !userInfo.isAdmin) {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo]);
+    dispatch(listProducts())
+  }, [dispatch, navigate, userInfo, successDelete]);
+
+   const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteProduct(id))
+  
+    }
+  }
 
   return (
     <>
@@ -38,6 +54,8 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
 
       {loading ? (
         <Loader />
@@ -73,7 +91,7 @@ const ProductListScreen = ({ history, match }) => {
                     <Button
                       variant="danger"
                       className="btn-sm"
-                      onClick={() => console.log(product._id)}
+                      onClick={() => deleteHandler(product._id)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>
