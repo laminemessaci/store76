@@ -7,8 +7,9 @@ import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import { useNavigate } from 'react-router-dom';
 
-const ProfileScreen = ({ location, history }) => {
+const ProfileScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,6 +17,7 @@ const ProfileScreen = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
@@ -31,7 +33,7 @@ const ProfileScreen = ({ location, history }) => {
 
   useEffect(() => {
     if (!userInfo) {
-      history.push('/login');
+     navigate('/login')
     } else {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
@@ -42,7 +44,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user, success]);
+  }, [dispatch, navigate, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
