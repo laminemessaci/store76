@@ -18,6 +18,7 @@ import RegisterScreen from './screens/RegisterScreen.js';
 import ShippingScreen from './screens/ShippingScreen.js';
 import UserEditScreen from './screens/UserEditScreen.js';
 import UserListScreen from './screens/UserListScreen.js';
+import OrderListScreen from './screens/OrderListScreen.js';
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+            <Route path="/admin/orderlist" element={<OrderListScreen />} />
             <Route path="/admin/productlist" element={<ProductListScreen />} />
             <Route
               path="/admin/product/:id/edit"
