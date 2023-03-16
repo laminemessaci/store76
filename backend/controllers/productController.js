@@ -1,10 +1,15 @@
 import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js';
+import colors from 'colors';
 
-// @desc Fetch all products
-// @route GET/api/products
-// @access Public
+// @desc    Fetch all products
+// @route   GET /api/products
+// @access  Public
 const getProducts = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+  console.log(colors.cyan('page', page));
+
   const keyword = req.query.keyword
     ? {
         name: {
@@ -14,9 +19,12 @@ const getProducts = asyncHandler(async (req, res) => {
       }
     : {};
 
-  const products = await Product.find({ ...keyword });
-  // throw new Error('Some error !');
-  res.json(products);
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc Fetch  single product
