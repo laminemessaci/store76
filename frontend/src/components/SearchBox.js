@@ -9,10 +9,8 @@ const SearchBox = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
-      //history.push(`/search/${keyword}`);
       navigate(`/search/${keyword}`);
     } else {
-      //history.push('/');
       navigate('/');
     }
   };
@@ -20,7 +18,6 @@ const SearchBox = () => {
   return (
     <Form
       onSubmit={submitHandler}
-   
       className="mr-sm-2 ml-sm-5   d-flex flex-row"
     >
       <Form.Control
