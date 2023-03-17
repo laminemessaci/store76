@@ -10,6 +10,8 @@ node_modules/
 /coverage
 
 # production
+# production
+/frontend/build
 /build
 
 # misc
