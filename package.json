@@ -15,10 +15,15 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn install --prefix frontend && yarn run build --prefix frontend",
+    "build": "yarn install --prefix frontend && yarn run build --prefix frontend",
+    "linter": "npm run lint --prefix frontend",
+    "fix:linter": "npm run lint:fix --prefix frontend",
+    "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,json}\"",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "jsdoc": "jsdoc -c jsdoc.json",
-    "lance-doc": "npm run jsdoc"
-
+    "lance-doc": "npm run jsdoc",
+    "clean": "rm -rf build dist docs",
+    "clean:all": "rm -fr node_modules build dist docs package-lock.json"
   },
   "repository": {
     "type": "git",
