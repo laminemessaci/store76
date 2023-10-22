@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Header.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Header.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import { Route, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import SearchBox from "./SearchBox";
+import { logout } from "../actions/userActions";
+
+/**
+ * Renders the header component.
+ *
+ * @return {JSX.Element} The header component.
+ */
+const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
+
+  return (
+    &lt;header>
+      &lt;Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+        &lt;Container>
+          &lt;LinkContainer to="/">
+            &lt;Navbar.Brand>Store76&lt;/Navbar.Brand>
+          &lt;/LinkContainer>
+          &lt;Navbar.Toggle aria-controls="basic-navbar-nav" />
+          &lt;Navbar.Collapse id="basic-navbar-nav">
+            {&lt;SearchBox />}
+            &lt;Nav className="ms-auto">
+              &lt;LinkContainer to="/cart">
+                &lt;Nav.Link>
+                  &lt;i className="fas fa-shopping-cart">&lt;/i> Cart
+                &lt;/Nav.Link>
+              &lt;/LinkContainer>
+              {userInfo ? (
+                &lt;NavDropdown title={userInfo.name} id="username">
+                  &lt;LinkContainer to="/profile">
+                    &lt;NavDropdown.Item>Profile&lt;/NavDropdown.Item>
+                  &lt;/LinkContainer>
+                  &lt;NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  &lt;/NavDropdown.Item>
+                &lt;/NavDropdown>
+              ) : (
+                &lt;LinkContainer to="/login">
+                  &lt;Nav.Link>
+                    &lt;i className="fas fa-user">&lt;/i> Sign In
+                  &lt;/Nav.Link>
+                &lt;/LinkContainer>
+              )}
+              {userInfo &amp;&amp; userInfo.isAdmin &amp;&amp; (
+                &lt;NavDropdown title="Admin" id="adminmenu">
+                  &lt;LinkContainer to="/admin/userlist">
+                    &lt;NavDropdown.Item>Users&lt;/NavDropdown.Item>
+                  &lt;/LinkContainer>
+                  &lt;LinkContainer to="/admin/productlist">
+                    &lt;NavDropdown.Item>Products&lt;/NavDropdown.Item>
+                  &lt;/LinkContainer>
+                  &lt;LinkContainer to="/admin/orderlist">
+                    &lt;NavDropdown.Item>Orders&lt;/NavDropdown.Item>
+                  &lt;/LinkContainer>
+                &lt;/NavDropdown>
+              )}
+            &lt;/Nav>
+          &lt;/Navbar.Collapse>
+        &lt;/Container>
+      &lt;/Navbar>
+    &lt;/header>
+  );
+};
+
+export default Header;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CartScreen">CartScreen</a></li><li><a href="global.html#CheckoutSteps">CheckoutSteps</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormContainer">FormContainer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoginScreen">LoginScreen</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Meta">Meta</a></li><li><a href="global.html#OrderListScreen">OrderListScreen</a></li><li><a href="global.html#OrderScreen">OrderScreen</a></li><li><a href="global.html#Paginate">Paginate</a></li><li><a href="global.html#PaymentScreen">PaymentScreen</a></li><li><a href="global.html#PlaceOrderScreen">PlaceOrderScreen</a></li><li><a href="global.html#Product">Product</a></li><li><a href="global.html#ProductCarousel">ProductCarousel</a></li><li><a href="global.html#ProductEditScreen">ProductEditScreen</a></li><li><a href="global.html#ProductListScreen">ProductListScreen</a></li><li><a href="global.html#ProductScreen">ProductScreen</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#Rating">Rating</a></li><li><a href="global.html#RegisterScreen">RegisterScreen</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#ShippingScreen">ShippingScreen</a></li><li><a href="global.html#UserEditScreen">UserEditScreen</a></li><li><a href="global.html#UserListScreen">UserListScreen</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#cartReducer">cartReducer</a></li><li><a href="global.html#createOrder">createOrder</a></li><li><a href="global.html#createProduct">createProduct</a></li><li><a href="global.html#createProductReview">createProductReview</a></li><li><a href="global.html#deleteProduct">deleteProduct</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#deliverOrder">deliverOrder</a></li><li><a href="global.html#getOrderDetails">getOrderDetails</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#listMyOrders">listMyOrders</a></li><li><a href="global.html#listOrders">listOrders</a></li><li><a href="global.html#listProductDetails">listProductDetails</a></li><li><a href="global.html#listProducts">listProducts</a></li><li><a href="global.html#listTopProducts">listTopProducts</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#orderCreateReducer">orderCreateReducer</a></li><li><a href="global.html#orderDeliverReducer">orderDeliverReducer</a></li><li><a href="global.html#orderDetailsReducer">orderDetailsReducer</a></li><li><a href="global.html#orderListMyReducer">orderListMyReducer</a></li><li><a href="global.html#orderListReducer">orderListReducer</a></li><li><a href="global.html#orderPayReducer">orderPayReducer</a></li><li><a href="global.html#payOrder">payOrder</a></li><li><a href="global.html#productCreateReducer">productCreateReducer</a></li><li><a href="global.html#productDeleteReducer">productDeleteReducer</a></li><li><a href="global.html#productDetailsReducer">productDetailsReducer</a></li><li><a href="global.html#productListReducer">productListReducer</a></li><li><a href="global.html#productReviewCreateReducer">productReviewCreateReducer</a></li><li><a href="global.html#productTopRatedReducer">productTopRatedReducer</a></li><li><a href="global.html#productUpdateReducer">productUpdateReducer</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeFromCart">removeFromCart</a></li><li><a href="global.html#savePaymentMethod">savePaymentMethod</a></li><li><a href="global.html#saveShippingAddress">saveShippingAddress</a></li><li><a href="global.html#updateProduct">updateProduct</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#userDeleteReducer">userDeleteReducer</a></li><li><a href="global.html#userDetailsReducer">userDetailsReducer</a></li><li><a href="global.html#userListReducer">userListReducer</a></li><li><a href="global.html#userLoginReducer">userLoginReducer</a></li><li><a href="global.html#userRegisterReducer">userRegisterReducer</a></li><li><a href="global.html#userUpdateProfileReducer">userUpdateProfileReducer</a></li><li><a href="global.html#userUpdateReducer">userUpdateReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 22 2023 18:12:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/PlaceOrderScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/PlaceOrderScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import CheckoutSteps from '../components/CheckoutSteps';
+import { ORDER_CREATE_RESET } from '../constants/orderConstants';
+import { USER_DETAILS_RESET } from '../constants/userConstants';
+import { createOrder } from '../actions/orderActions.js';
+
+/**
+ * Renders the PlaceOrderScreen component.
+ *
+ * @return {JSX.Element} The rendered component.
+ */
+const PlaceOrderScreen = () => {
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate();
+
+  if (!cart.shippingAddress.address) {
+    navigate('/shipping');
+  } else if (!cart.paymentMethod) {
+    navigate('/payment');
+  }
+  //   Calculate prices
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+  cart.totalPrice = (
+    +cart.itemsPrice +
+    +cart.shippingPrice +
+    +cart.taxPrice
+  ).toFixed(2);
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+      dispatch({ type: USER_DETAILS_RESET });
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+    // eslint-disable-next-line
+  }, [navigate, success]);
+
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
+
+  return (
+    &lt;>
+      &lt;CheckoutSteps step1 step2 step3 step4 />
+      &lt;Row>
+        &lt;Col md={8}>
+          &lt;ListGroup variant="flush">
+            &lt;ListGroup.Item>
+              &lt;h2>Shipping&lt;/h2>
+              &lt;p>
+                &lt;strong>Address:&lt;/strong>
+                {cart.shippingAddress.address}, {cart.shippingAddress.city}{' '}
+                {cart.shippingAddress.postalCode},{' '}
+                {cart.shippingAddress.country}
+              &lt;/p>
+            &lt;/ListGroup.Item>
+
+            &lt;ListGroup.Item>
+              &lt;h2>Payment Method&lt;/h2>
+              &lt;strong>Method: &lt;/strong>
+              {cart.paymentMethod}
+            &lt;/ListGroup.Item>
+
+            &lt;ListGroup.Item>
+              &lt;h2>Order Items&lt;/h2>
+              {cart.cartItems.length === 0 ? (
+                &lt;Message>Your cart is empty&lt;/Message>
+              ) : (
+                &lt;ListGroup variant="flush">
+                  {cart.cartItems.map((item, index) => (
+                    &lt;ListGroup.Item key={index}>
+                      &lt;Row>
+                        &lt;Col md={1}>
+                          &lt;Image
+                            src={item.image}
+                            alt={item.name}
+                            fluid
+                            rounded
+                          />
+                        &lt;/Col>
+                        &lt;Col>
+                          &lt;Link to={`/product/${item.product}`}>
+                            {item.name}
+                          &lt;/Link>
+                        &lt;/Col>
+                        &lt;Col md={4}>
+                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                        &lt;/Col>
+                      &lt;/Row>
+                    &lt;/ListGroup.Item>
+                  ))}
+                &lt;/ListGroup>
+              )}
+            &lt;/ListGroup.Item>
+          &lt;/ListGroup>
+        &lt;/Col>
+        &lt;Col md={4}>
+          &lt;Card>
+            &lt;ListGroup variant="flush">
+              &lt;ListGroup.Item>
+                &lt;h2>Order Summary&lt;/h2>
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                &lt;Row>
+                  &lt;Col>Items&lt;/Col>
+                  &lt;Col>${cart.itemsPrice}&lt;/Col>
+                &lt;/Row>
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                &lt;Row>
+                  &lt;Col>Shipping&lt;/Col>
+                  &lt;Col>${cart.shippingPrice}&lt;/Col>
+                &lt;/Row>
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                &lt;Row>
+                  &lt;Col>Tax&lt;/Col>
+                  &lt;Col>${cart.taxPrice}&lt;/Col>
+                &lt;/Row>
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                &lt;Row>
+                  &lt;Col>Total&lt;/Col>
+                  &lt;Col>${cart.totalPrice}&lt;/Col>
+                &lt;/Row>
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                {error &amp;&amp; &lt;Message variant="danger">{error}&lt;/Message>}
+              &lt;/ListGroup.Item>
+              &lt;ListGroup.Item>
+                &lt;Button
+                  type="button"
+                  className="btn-block"
+                  disabled={cart.cartItems === 0}
+                  onClick={placeOrderHandler}
+                >
+                  Place Order
+                &lt;/Button>
+              &lt;/ListGroup.Item>
+            &lt;/ListGroup>
+          &lt;/Card>
+        &lt;/Col>
+      &lt;/Row>
+    &lt;/>
+  );
+};
+
+export default PlaceOrderScreen;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CartScreen">CartScreen</a></li><li><a href="global.html#CheckoutSteps">CheckoutSteps</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormContainer">FormContainer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoginScreen">LoginScreen</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Meta">Meta</a></li><li><a href="global.html#OrderListScreen">OrderListScreen</a></li><li><a href="global.html#OrderScreen">OrderScreen</a></li><li><a href="global.html#Paginate">Paginate</a></li><li><a href="global.html#PaymentScreen">PaymentScreen</a></li><li><a href="global.html#PlaceOrderScreen">PlaceOrderScreen</a></li><li><a href="global.html#Product">Product</a></li><li><a href="global.html#ProductCarousel">ProductCarousel</a></li><li><a href="global.html#ProductEditScreen">ProductEditScreen</a></li><li><a href="global.html#ProductListScreen">ProductListScreen</a></li><li><a href="global.html#ProductScreen">ProductScreen</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#Rating">Rating</a></li><li><a href="global.html#RegisterScreen">RegisterScreen</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#ShippingScreen">ShippingScreen</a></li><li><a href="global.html#UserEditScreen">UserEditScreen</a></li><li><a href="global.html#UserListScreen">UserListScreen</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#cartReducer">cartReducer</a></li><li><a href="global.html#createOrder">createOrder</a></li><li><a href="global.html#createProduct">createProduct</a></li><li><a href="global.html#createProductReview">createProductReview</a></li><li><a href="global.html#deleteProduct">deleteProduct</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#deliverOrder">deliverOrder</a></li><li><a href="global.html#getOrderDetails">getOrderDetails</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#listMyOrders">listMyOrders</a></li><li><a href="global.html#listOrders">listOrders</a></li><li><a href="global.html#listProductDetails">listProductDetails</a></li><li><a href="global.html#listProducts">listProducts</a></li><li><a href="global.html#listTopProducts">listTopProducts</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#orderCreateReducer">orderCreateReducer</a></li><li><a href="global.html#orderDeliverReducer">orderDeliverReducer</a></li><li><a href="global.html#orderDetailsReducer">orderDetailsReducer</a></li><li><a href="global.html#orderListMyReducer">orderListMyReducer</a></li><li><a href="global.html#orderListReducer">orderListReducer</a></li><li><a href="global.html#orderPayReducer">orderPayReducer</a></li><li><a href="global.html#payOrder">payOrder</a></li><li><a href="global.html#productCreateReducer">productCreateReducer</a></li><li><a href="global.html#productDeleteReducer">productDeleteReducer</a></li><li><a href="global.html#productDetailsReducer">productDetailsReducer</a></li><li><a href="global.html#productListReducer">productListReducer</a></li><li><a href="global.html#productReviewCreateReducer">productReviewCreateReducer</a></li><li><a href="global.html#productTopRatedReducer">productTopRatedReducer</a></li><li><a href="global.html#productUpdateReducer">productUpdateReducer</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeFromCart">removeFromCart</a></li><li><a href="global.html#savePaymentMethod">savePaymentMethod</a></li><li><a href="global.html#saveShippingAddress">saveShippingAddress</a></li><li><a href="global.html#updateProduct">updateProduct</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#userDeleteReducer">userDeleteReducer</a></li><li><a href="global.html#userDetailsReducer">userDetailsReducer</a></li><li><a href="global.html#userListReducer">userListReducer</a></li><li><a href="global.html#userLoginReducer">userLoginReducer</a></li><li><a href="global.html#userRegisterReducer">userRegisterReducer</a></li><li><a href="global.html#userUpdateProfileReducer">userUpdateProfileReducer</a></li><li><a href="global.html#userUpdateReducer">userUpdateReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 22 2023 18:12:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

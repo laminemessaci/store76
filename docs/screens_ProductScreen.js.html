@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/ProductScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/ProductScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  ListGroupItem,
+  Row,
+} from 'react-bootstrap';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Rating from '../components/Rating.js';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createProductReview,
+  listProductDetails,
+} from '../actions/productActions.js';
+import Loader from '../components/Loader.js';
+import Message from '../components/Message.js';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants.js';
+import Meta from '../components/Meta.js';
+
+/**
+ * Renders the product screen with product details, reviews, and the option to add the product to the cart.
+ *
+ * @param {type} None
+ * @return {type} None
+ */
+const ProductScreen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+
+  const dispatch = useDispatch();
+  const productDetails = useSelector((state) => state.productDetails);
+  const { loading, error, product } = productDetails;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const {
+    success: successProductReview,
+    loading: loadingProductReview,
+    error: errorProductReview,
+  } = productReviewCreate;
+
+  useEffect(() => {
+    if (successProductReview) {
+      setRating(0);
+      setComment('');
+    }
+    if (!product._id || product._id !== id) {
+      dispatch(listProductDetails(id));
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
+  }, [dispatch, successProductReview]);
+
+  /**
+   * Adds the item to the cart with the specified quantity.
+   *
+   * @param {number} id - The ID of the item.
+   * @param {number} qty - The quantity of the item.
+   * @return {undefined} This function does not return a value.
+   */
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${qty}`);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview(id, {
+        rating,
+        comment,
+      })
+    );
+    // eslint-disable-next-line no-restricted-globals
+    if (successProductReview) location.reload();
+  };
+
+  return (
+    &lt;>
+      &lt;Link className="btn btn-light my-3" to="/">
+        Go Back
+      &lt;/Link>
+      {loading ? (
+        &lt;Loader />
+      ) : error ? (
+        &lt;Message variant="danger">{error}&lt;/Message>
+      ) : (
+        &lt;>
+          &lt;Meta title={product.name} />
+          &lt;Row>
+            &lt;Col md={6}>
+              &lt;Image src={product.image} alt={product.name} fluid />
+            &lt;/Col>
+            &lt;Col md={3}>
+              &lt;ListGroup variant="flush">
+                &lt;ListGroup.Item>
+                  &lt;h3>{product.name}&lt;/h3>
+                &lt;/ListGroup.Item>
+                &lt;ListGroup.Item>
+                  &lt;Rating
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
+                &lt;/ListGroup.Item>
+                &lt;ListGroup.Item>Price: ${product.price}&lt;/ListGroup.Item>
+                &lt;ListGroup.Item>
+                  Description: {product.description}
+                &lt;/ListGroup.Item>
+              &lt;/ListGroup>
+            &lt;/Col>
+            &lt;Col md={3}>
+              &lt;Card>
+                &lt;ListGroup variant="flush">
+                  &lt;ListGroup.Item>
+                    &lt;Row>
+                      &lt;Col>Price:&lt;/Col>
+                      &lt;Col>
+                        &lt;strong>${product.price}&lt;/strong>
+                      &lt;/Col>
+                    &lt;/Row>
+                  &lt;/ListGroup.Item>
+
+                  &lt;ListGroup.Item>
+                    &lt;Row>
+                      &lt;Col>Status:&lt;/Col>
+                      &lt;Col>
+                        {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                      &lt;/Col>
+                    &lt;/Row>
+                  &lt;/ListGroup.Item>
+
+                  {product.countInStock > 0 &amp;&amp; (
+                    &lt;ListGroup.Item>
+                      &lt;Row>
+                        &lt;Col>Qty&lt;/Col>
+                        &lt;Col>
+                          &lt;Form.Control
+                            as="select"
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                &lt;option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                &lt;/option>
+                              )
+                            )}
+                          &lt;/Form.Control>
+                        &lt;/Col>
+                      &lt;/Row>
+                    &lt;/ListGroup.Item>
+                  )}
+
+                  &lt;ListGroup.Item>
+                    &lt;Button
+                      onClick={addToCartHandler}
+                      className="btn-block"
+                      type="button"
+                      disabled={product.countInStock === 0}
+                    >
+                      Add To Cart
+                    &lt;/Button>
+                  &lt;/ListGroup.Item>
+                &lt;/ListGroup>
+              &lt;/Card>
+            &lt;/Col>
+          &lt;/Row>
+          &lt;Row>
+            &lt;Col md={6}>
+              &lt;h2>Reviews&lt;/h2>
+              {product.reviews.length === 0 &amp;&amp; &lt;Message>No Reviews&lt;/Message>}
+              &lt;ListGroup variant="flush">
+                {product.reviews.map((review) => (
+                  &lt;ListGroup.Item key={review._id}>
+                    &lt;strong>{review.name}&lt;/strong>
+                    &lt;Rating value={review.rating} />
+                    &lt;p>{review.createdAt.substring(0, 10)}&lt;/p>
+                    &lt;p>{review.comment}&lt;/p>
+                  &lt;/ListGroup.Item>
+                ))}
+                &lt;ListGroup.Item>
+                  &lt;h2>Write a Customer Review&lt;/h2>
+                  {successProductReview &amp;&amp; (
+                    &lt;Message variant="success">
+                      Review submitted successfully
+                    &lt;/Message>
+                  )}
+                  {loadingProductReview &amp;&amp; &lt;Loader />}
+                  {errorProductReview &amp;&amp; (
+                    &lt;Message variant="danger">{errorProductReview}&lt;/Message>
+                  )}
+                  {userInfo ? (
+                    &lt;Form onSubmit={submitHandler}>
+                      &lt;Form.Group controlId="rating">
+                        &lt;Form.Label>Rating&lt;/Form.Label>
+                        &lt;Form.Control
+                          as="select"
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
+                          &lt;option value="">Select...&lt;/option>
+                          &lt;option value="1">1 - Poor&lt;/option>
+                          &lt;option value="2">2 - Fair&lt;/option>
+                          &lt;option value="3">3 - Good&lt;/option>
+                          &lt;option value="4">4 - Very Good&lt;/option>
+                          &lt;option value="5">5 - Excellent&lt;/option>
+                        &lt;/Form.Control>
+                      &lt;/Form.Group>
+                      &lt;Form.Group controlId="comment">
+                        &lt;Form.Label>Comment&lt;/Form.Label>
+                        &lt;Form.Control
+                          as="textarea"
+                          row="3"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        >&lt;/Form.Control>
+                      &lt;/Form.Group>
+                      &lt;Button
+                        disabled={loadingProductReview}
+                        type="submit"
+                        variant="primary"
+                      >
+                        Submit
+                      &lt;/Button>
+                    &lt;/Form>
+                  ) : (
+                    &lt;Message>
+                      Please &lt;Link to="/login">sign in&lt;/Link> to write a review{' '}
+                    &lt;/Message>
+                  )}
+                &lt;/ListGroup.Item>
+              &lt;/ListGroup>
+            &lt;/Col>
+          &lt;/Row>
+        &lt;/>
+      )}
+    &lt;/>
+  );
+};
+
+export default ProductScreen;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CartScreen">CartScreen</a></li><li><a href="global.html#CheckoutSteps">CheckoutSteps</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormContainer">FormContainer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoginScreen">LoginScreen</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Meta">Meta</a></li><li><a href="global.html#OrderListScreen">OrderListScreen</a></li><li><a href="global.html#OrderScreen">OrderScreen</a></li><li><a href="global.html#Paginate">Paginate</a></li><li><a href="global.html#PaymentScreen">PaymentScreen</a></li><li><a href="global.html#PlaceOrderScreen">PlaceOrderScreen</a></li><li><a href="global.html#Product">Product</a></li><li><a href="global.html#ProductCarousel">ProductCarousel</a></li><li><a href="global.html#ProductEditScreen">ProductEditScreen</a></li><li><a href="global.html#ProductListScreen">ProductListScreen</a></li><li><a href="global.html#ProductScreen">ProductScreen</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#Rating">Rating</a></li><li><a href="global.html#RegisterScreen">RegisterScreen</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#ShippingScreen">ShippingScreen</a></li><li><a href="global.html#UserEditScreen">UserEditScreen</a></li><li><a href="global.html#UserListScreen">UserListScreen</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#cartReducer">cartReducer</a></li><li><a href="global.html#createOrder">createOrder</a></li><li><a href="global.html#createProduct">createProduct</a></li><li><a href="global.html#createProductReview">createProductReview</a></li><li><a href="global.html#deleteProduct">deleteProduct</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#deliverOrder">deliverOrder</a></li><li><a href="global.html#getOrderDetails">getOrderDetails</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#listMyOrders">listMyOrders</a></li><li><a href="global.html#listOrders">listOrders</a></li><li><a href="global.html#listProductDetails">listProductDetails</a></li><li><a href="global.html#listProducts">listProducts</a></li><li><a href="global.html#listTopProducts">listTopProducts</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#orderCreateReducer">orderCreateReducer</a></li><li><a href="global.html#orderDeliverReducer">orderDeliverReducer</a></li><li><a href="global.html#orderDetailsReducer">orderDetailsReducer</a></li><li><a href="global.html#orderListMyReducer">orderListMyReducer</a></li><li><a href="global.html#orderListReducer">orderListReducer</a></li><li><a href="global.html#orderPayReducer">orderPayReducer</a></li><li><a href="global.html#payOrder">payOrder</a></li><li><a href="global.html#productCreateReducer">productCreateReducer</a></li><li><a href="global.html#productDeleteReducer">productDeleteReducer</a></li><li><a href="global.html#productDetailsReducer">productDetailsReducer</a></li><li><a href="global.html#productListReducer">productListReducer</a></li><li><a href="global.html#productReviewCreateReducer">productReviewCreateReducer</a></li><li><a href="global.html#productTopRatedReducer">productTopRatedReducer</a></li><li><a href="global.html#productUpdateReducer">productUpdateReducer</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeFromCart">removeFromCart</a></li><li><a href="global.html#savePaymentMethod">savePaymentMethod</a></li><li><a href="global.html#saveShippingAddress">saveShippingAddress</a></li><li><a href="global.html#updateProduct">updateProduct</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#userDeleteReducer">userDeleteReducer</a></li><li><a href="global.html#userDetailsReducer">userDetailsReducer</a></li><li><a href="global.html#userListReducer">userListReducer</a></li><li><a href="global.html#userLoginReducer">userLoginReducer</a></li><li><a href="global.html#userRegisterReducer">userRegisterReducer</a></li><li><a href="global.html#userUpdateProfileReducer">userUpdateProfileReducer</a></li><li><a href="global.html#userUpdateReducer">userUpdateReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 22 2023 18:12:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

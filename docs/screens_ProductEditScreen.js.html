@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screens/ProductEditScreen.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screens/ProductEditScreen.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import FormContainer from '../components/FormContainer'
+import { listProductDetails, updateProduct } from '../actions/productActions'
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
+import { useParams } from 'react-router-dom'
+
+/**
+ * Renders the ProductEditScreen component.
+ *
+ * @return {JSX.Element} The rendered ProductEditScreen component.
+ */
+const ProductEditScreen = () => {
+ 
+    const {id: productId} = useParams()
+    console.log(' id === ', productId)
+
+  const [name, setName] = useState('')
+  const [price, setPrice] = useState(0)
+  const [image, setImage] = useState('')
+  const [brand, setBrand] = useState('')
+  const [category, setCategory] = useState('')
+  const [countInStock, setCountInStock] = useState(0)
+  const [description, setDescription] = useState('')
+  const [uploading, setUploading] = useState(false)
+
+  const dispatch = useDispatch()
+    const navigate = useNavigate();
+
+  const productDetails = useSelector((state) => state.productDetails)
+  const { loading, error, product } = productDetails
+
+  const productUpdate = useSelector((state) => state.productUpdate)
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate
+
+  useEffect(() => {
+    if (successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+     // history.push('/admin/productlist')
+     navigate('/admin/productlist')
+    } else {
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId))
+      } else {
+        setName(product.name)
+        setPrice(product.price)
+        setImage(product.image)
+        setBrand(product.brand)
+        setCategory(product.category)
+        setCountInStock(product.countInStock)
+        setDescription(product.description)
+      }
+    }
+  }, [dispatch, navigate, productId, product, successUpdate])
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault()
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        brand,
+        category,
+        description,
+        countInStock,
+      })
+    )
+  }
+
+  return (
+    &lt;>
+      &lt;Link to='/admin/productlist' className='btn btn-light my-3'>
+        Go Back
+      &lt;/Link>
+      &lt;FormContainer>
+        &lt;h1>Edit Product&lt;/h1>
+        {loadingUpdate &amp;&amp; &lt;Loader />}
+        {errorUpdate &amp;&amp; &lt;Message variant='danger'>{errorUpdate}&lt;/Message>}
+        {loading ? (
+          &lt;Loader />
+        ) : error ? (
+          &lt;Message variant='danger'>{error}&lt;/Message>
+        ) : (
+          &lt;Form onSubmit={submitHandler}>
+            &lt;Form.Group controlId='name'>
+              &lt;Form.Label>Name&lt;/Form.Label>
+              &lt;Form.Control
+                type='name'
+                placeholder='Enter name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='price'>
+              &lt;Form.Label>Price&lt;/Form.Label>
+              &lt;Form.Control
+                type='number'
+                placeholder='Enter price'
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='image'>
+              &lt;Form.Label>Image&lt;/Form.Label>
+              &lt;Form.Control
+                type='text'
+                placeholder='Enter image url'
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              >&lt;/Form.Control>
+              &lt;Form.Control
+              type='file'
+                id='image-file'
+                label='Choose File'
+                custom
+                onChange={uploadFileHandler}
+              >&lt;/Form.Control>
+              {uploading &amp;&amp; &lt;Loader />}
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='brand'>
+              &lt;Form.Label>Brand&lt;/Form.Label>
+              &lt;Form.Control
+                type='text'
+                placeholder='Enter brand'
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='countInStock'>
+              &lt;Form.Label>Count In Stock&lt;/Form.Label>
+              &lt;Form.Control
+                type='number'
+                placeholder='Enter countInStock'
+                value={countInStock}
+                onChange={(e) => setCountInStock(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='category'>
+              &lt;Form.Label>Category&lt;/Form.Label>
+              &lt;Form.Control
+                type='text'
+                placeholder='Enter category'
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Form.Group controlId='description'>
+              &lt;Form.Label>Description&lt;/Form.Label>
+              &lt;Form.Control
+                type='text'
+                placeholder='Enter description'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              >&lt;/Form.Control>
+            &lt;/Form.Group>
+
+            &lt;Button type='submit' variant='primary'>
+              Update
+            &lt;/Button>
+          &lt;/Form>
+        )}
+      &lt;/FormContainer>
+    &lt;/>
+  )
+}
+
+export default ProductEditScreen
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#App">App</a></li><li><a href="global.html#CartScreen">CartScreen</a></li><li><a href="global.html#CheckoutSteps">CheckoutSteps</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#FormContainer">FormContainer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#HomeScreen">HomeScreen</a></li><li><a href="global.html#Loader">Loader</a></li><li><a href="global.html#LoginScreen">LoginScreen</a></li><li><a href="global.html#Message">Message</a></li><li><a href="global.html#Meta">Meta</a></li><li><a href="global.html#OrderListScreen">OrderListScreen</a></li><li><a href="global.html#OrderScreen">OrderScreen</a></li><li><a href="global.html#Paginate">Paginate</a></li><li><a href="global.html#PaymentScreen">PaymentScreen</a></li><li><a href="global.html#PlaceOrderScreen">PlaceOrderScreen</a></li><li><a href="global.html#Product">Product</a></li><li><a href="global.html#ProductCarousel">ProductCarousel</a></li><li><a href="global.html#ProductEditScreen">ProductEditScreen</a></li><li><a href="global.html#ProductListScreen">ProductListScreen</a></li><li><a href="global.html#ProductScreen">ProductScreen</a></li><li><a href="global.html#ProfileScreen">ProfileScreen</a></li><li><a href="global.html#Rating">Rating</a></li><li><a href="global.html#RegisterScreen">RegisterScreen</a></li><li><a href="global.html#SearchBox">SearchBox</a></li><li><a href="global.html#ShippingScreen">ShippingScreen</a></li><li><a href="global.html#UserEditScreen">UserEditScreen</a></li><li><a href="global.html#UserListScreen">UserListScreen</a></li><li><a href="global.html#addToCart">addToCart</a></li><li><a href="global.html#cartReducer">cartReducer</a></li><li><a href="global.html#createOrder">createOrder</a></li><li><a href="global.html#createProduct">createProduct</a></li><li><a href="global.html#createProductReview">createProductReview</a></li><li><a href="global.html#deleteProduct">deleteProduct</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#deliverOrder">deliverOrder</a></li><li><a href="global.html#getOrderDetails">getOrderDetails</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#listMyOrders">listMyOrders</a></li><li><a href="global.html#listOrders">listOrders</a></li><li><a href="global.html#listProductDetails">listProductDetails</a></li><li><a href="global.html#listProducts">listProducts</a></li><li><a href="global.html#listTopProducts">listTopProducts</a></li><li><a href="global.html#listUsers">listUsers</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#orderCreateReducer">orderCreateReducer</a></li><li><a href="global.html#orderDeliverReducer">orderDeliverReducer</a></li><li><a href="global.html#orderDetailsReducer">orderDetailsReducer</a></li><li><a href="global.html#orderListMyReducer">orderListMyReducer</a></li><li><a href="global.html#orderListReducer">orderListReducer</a></li><li><a href="global.html#orderPayReducer">orderPayReducer</a></li><li><a href="global.html#payOrder">payOrder</a></li><li><a href="global.html#productCreateReducer">productCreateReducer</a></li><li><a href="global.html#productDeleteReducer">productDeleteReducer</a></li><li><a href="global.html#productDetailsReducer">productDetailsReducer</a></li><li><a href="global.html#productListReducer">productListReducer</a></li><li><a href="global.html#productReviewCreateReducer">productReviewCreateReducer</a></li><li><a href="global.html#productTopRatedReducer">productTopRatedReducer</a></li><li><a href="global.html#productUpdateReducer">productUpdateReducer</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#removeFromCart">removeFromCart</a></li><li><a href="global.html#savePaymentMethod">savePaymentMethod</a></li><li><a href="global.html#saveShippingAddress">saveShippingAddress</a></li><li><a href="global.html#updateProduct">updateProduct</a></li><li><a href="global.html#updateUser">updateUser</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#userDeleteReducer">userDeleteReducer</a></li><li><a href="global.html#userDetailsReducer">userDetailsReducer</a></li><li><a href="global.html#userListReducer">userListReducer</a></li><li><a href="global.html#userLoginReducer">userLoginReducer</a></li><li><a href="global.html#userRegisterReducer">userRegisterReducer</a></li><li><a href="global.html#userUpdateProfileReducer">userUpdateProfileReducer</a></li><li><a href="global.html#userUpdateReducer">userUpdateReducer</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 22 2023 18:12:27 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -15,7 +15,10 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn install --prefix frontend && yarn run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn install --prefix frontend && yarn run build --prefix frontend",
+    "jsdoc": "jsdoc -c jsdoc.json",
+    "lance-doc": "npm run jsdoc"
+
   },
   "repository": {
     "type": "git",
@@ -40,6 +43,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.4.0",
+    "jsdoc": "^4.0.2",
     "nodemon": "^2.0.20"
   }
 }
