@@ -15,7 +15,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "build": "cd frontend && npm run build",
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
     "linter": "npm run lint --prefix frontend",
     "fix:linter": "npm run lint:fix --prefix frontend",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx,json}\"",
