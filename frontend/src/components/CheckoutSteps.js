@@ -2,6 +2,15 @@ import React from 'react';
 import { Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
+/**
+ * Renders a set of navigation links for each step of the checkout process.
+ *
+ * @param {Object} step1 - A boolean indicating whether the user has completed step 1.
+ * @param {Object} step2 - A boolean indicating whether the user has completed step 2.
+ * @param {Object} step3 - A boolean indicating whether the user has completed step 3.
+ * @param {Object} step4 - A boolean indicating whether the user has completed step 4.
+ * @return {JSX.Element} The rendered navigation links.
+ */
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
     <Nav className="justify-content-center mb-4">

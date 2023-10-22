@@ -24,6 +24,13 @@ import {
 } from '../constants/productConstants';
 import { logout } from './userActions';
 
+/**
+ * Fetches a list of products from the API based on a keyword and page number.
+ *
+ * @param {string} keyword - The keyword to search for in the products.
+ * @param {string} pageNumber - The page number of the products to fetch.
+ * @return {Promise} A promise that resolves to the fetched product list.
+ */
 export const listProducts =
   (keyword = '', pageNumber = '') =>
   async (dispatch) => {
@@ -49,6 +56,12 @@ export const listProducts =
     }
   };
 
+/**
+ * Retrieves the details of a product with the given ID.
+ *
+ * @param {string} id - The ID of the product.
+ * @return {Promise} A promise that resolves to the product details.
+ */
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
@@ -70,6 +83,12 @@ export const listProductDetails = (id) => async (dispatch) => {
   }
 };
 
+/**
+ * Deletes a product by its ID.
+ *
+ * @param {string} id - The ID of the product to be deleted.
+ * @return {Promise} A promise that resolves when the product is successfully deleted.
+ */
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -106,6 +125,13 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Create a new product.
+ *
+ * @param {function} dispatch - A function used to dispatch Redux actions.
+ * @param {function} getState - A function used to get the current state from the Redux store.
+ * @return {Promise<void>} A promise that resolves when the product is successfully created.
+ */
 export const createProduct = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -143,6 +169,12 @@ export const createProduct = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Updates a product in the database.
+ *
+ * @param {Object} product - The product object to be updated.
+ * @return {Promise<void>} - A promise that resolves when the product is successfully updated.
+ */
 export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -186,6 +218,15 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Create a product review.
+ *
+ * @param {string} productId - The ID of the product to review.
+ * @param {object} review - The review object containing details of the review.
+ * @param {function} dispatch - The dispatch function to update the state.
+ * @param {function} getState - The getState function to get the current state.
+ * @return {Promise} - A promise that resolves when the review is created.
+ */
 export const createProductReview =
   (productId, review) => async (dispatch, getState) => {
     try {
@@ -224,6 +265,12 @@ export const createProductReview =
     }
   };
 
+/**
+ * Fetches the top products from the API and dispatches the corresponding actions.
+ *
+ * @param {function} dispatch - The dispatch function from the Redux store.
+ * @return {Promise<void>} Returns a promise that resolves when the API request is complete.
+ */
 export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST });

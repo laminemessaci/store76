@@ -10,6 +10,11 @@ import { listProductDetails, updateProduct } from '../actions/productActions'
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 import { useParams } from 'react-router-dom'
 
+/**
+ * Renders the ProductEditScreen component.
+ *
+ * @return {JSX.Element} The rendered ProductEditScreen component.
+ */
 const ProductEditScreen = () => {
  
     const {id: productId} = useParams()

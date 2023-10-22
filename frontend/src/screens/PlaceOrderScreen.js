@@ -8,6 +8,11 @@ import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import { USER_DETAILS_RESET } from '../constants/userConstants';
 import { createOrder } from '../actions/orderActions.js';
 
+/**
+ * Renders the PlaceOrderScreen component.
+ *
+ * @return {JSX.Element} The rendered component.
+ */
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
 

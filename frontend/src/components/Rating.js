@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Renders a rating component based on the provided value, text, and color.
+ *
+ * @param {number} value - The rating value.
+ * @param {string} text - The text to display along with the rating.
+ * @param {string} color - The color of the rating stars.
+ * @return {JSX.Element} The rendered rating component.
+ */
 const Rating = ({ value, text, color }) => {
   return (
     <div className="rating">

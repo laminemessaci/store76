@@ -8,7 +8,13 @@ import FormContainer from '../components/FormContainer';
 import { getUserDetails, updateUser } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
 
-const UserEditScreen = ({ match, history }) => {
+/**
+ * Submits the form data and updates the user information.
+ *
+ * @param {object} e - The event object.
+ * @return {void} - This function does not return anything.
+ */
+const UserEditScreen = () => {
   const {id: userId} = useParams()
   // console.log(' == id' ,userId)
 
@@ -32,7 +38,7 @@ const UserEditScreen = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
-      // history.push('/admin/userlist')
+     
       navigate('/admin/userlist');
     } else {
       if (!user.name || user._id !== userId) {
@@ -45,6 +51,12 @@ const UserEditScreen = ({ match, history }) => {
     }
   }, [dispatch, navigate, userId, user, successUpdate]);
 
+  /**
+   * Submits the form data and updates the user information.
+   *
+   * @param {object} e - The event object.
+   * @return {void} - This function does not return anything.
+   */
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(updateUser({ _id: userId, name, email, isAdmin }));

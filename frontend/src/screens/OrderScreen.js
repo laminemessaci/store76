@@ -16,6 +16,13 @@ import {
   ORDER_DELIVER_RESET,
 } from '../constants/orderConstants';
 
+/**
+ * Renders the OrderScreen component, which displays the details of an order.
+ *
+ * @param {Object} match - The match object containing the route parameters.
+ * @param {Object} history - The history object for navigating between routes.
+ * @return {JSX.Element} The rendered OrderScreen component.
+ */
 const OrderScreen = ({ match, history }) => {
   // const orderId = match.params.id;
   const { orderId } = useParams();
@@ -54,6 +61,11 @@ const OrderScreen = ({ match, history }) => {
       navigate('/login');
     }
 
+    /**
+     * Generates a PayPal script and appends it to the HTML document body.
+     *
+     * @return {Promise<void>} A promise that resolves when the script has been successfully added.
+     */
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get('/api/config/paypal');
       const script = document.createElement('script');

@@ -21,6 +21,12 @@ import Message from '../components/Message.js';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants.js';
 import Meta from '../components/Meta.js';
 
+/**
+ * Renders the product screen with product details, reviews, and the option to add the product to the cart.
+ *
+ * @param {type} None
+ * @return {type} None
+ */
 const ProductScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -53,6 +59,13 @@ const ProductScreen = () => {
     }
   }, [dispatch, successProductReview]);
 
+  /**
+   * Adds the item to the cart with the specified quantity.
+   *
+   * @param {number} id - The ID of the item.
+   * @param {number} qty - The quantity of the item.
+   * @return {undefined} This function does not return a value.
+   */
   const addToCartHandler = () => {
     navigate(`/cart/${id}?qty=${qty}`);
   };

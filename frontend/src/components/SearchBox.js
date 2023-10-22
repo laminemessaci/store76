@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders a search box component.
+ *
+ * @return {JSX.Element} The rendered search box component.
+ */
 const SearchBox = () => {
   const [keyword, setKeyword] = useState('');
   const navigate = useNavigate();
 
+  /**
+   * Submit handler function for form submission.
+   *
+   * @param {Event} e - The event object.
+   * @return {void} This function does not return a value.
+   */
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {

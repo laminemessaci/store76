@@ -6,6 +6,11 @@ import Loader from './Loader';
 import Message from './Message';
 import { listTopProducts } from '../actions/productActions';
 
+/**
+ * Renders a product carousel component.
+ *
+ * @return {JSX.Element} The rendered product carousel.
+ */
 const ProductCarousel = () => {
   const dispatch = useDispatch();
 

@@ -8,6 +8,11 @@ import FormContainer from '../components/FormContainer';
 import { register } from '../actions/userActions';
 import { useLocation } from 'react-router-dom';
 
+/**
+ * Renders the RegisterScreen component, which displays a form for user registration.
+ *
+ * @return {JSX.Element} The RegisterScreen component.
+ */
 const RegisterScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

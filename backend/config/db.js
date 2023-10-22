@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+/**
+ * Connects to the MongoDB database.
+ *
+ * @return {Promise<void>} This function doesn't return anything.
+ */
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI, {

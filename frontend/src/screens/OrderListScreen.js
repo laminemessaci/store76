@@ -7,6 +7,11 @@ import Loader from '../components/Loader'
 import { listOrders } from '../actions/orderActions'
 import { useNavigate } from 'react-router-dom'
 
+/**
+ * Renders the OrderListScreen component.
+ *
+ * @return {JSX.Element} The rendered OrderListScreen component.
+ */
 const OrderListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()

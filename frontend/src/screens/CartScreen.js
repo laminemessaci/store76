@@ -13,6 +13,11 @@ import {
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 
+/**
+ * Renders the CartScreen component.
+ *
+ * @return {JSX.Element} The rendered CartScreen component.
+ */
 const CartScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();

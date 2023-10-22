@@ -6,6 +6,11 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { savePaymentMethod } from '../actions/cartActions';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders the PaymentScreen component.
+ *
+ * @return {JSX.Element} The rendered PaymentScreen component.
+ */
 const PaymentScreen = () => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;

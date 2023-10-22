@@ -15,16 +15,23 @@ const storage = multer.diskStorage({
   },
 })
 
+/**
+ * Checks the file type of the given file.
+ *
+ * @param {object} file - The file to check the type of.
+ * @param {function} cb - The callback function to be called with the result.
+ * @return {undefined} This function does not return a value.
+ */
 function checkFileType(file, cb) {
-  const filetypes = /jpg|jpeg|png/
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
-  const mimetype = filetypes.test(file.mimetype)
+  const filetypes = /\.(jpg|jpeg|png)$/i;
+  const extname = filetypes.test(path.extname(file.originalname));
+  const mimetype = filetypes.test(file.mimetype);
 
   if (extname && mimetype) {
-    return cb(null, true)
-  } else {
-    cb('Images only!')
+    return cb(null, true);
   }
+
+  cb('Images only!');
 }
 
 const upload = multer({

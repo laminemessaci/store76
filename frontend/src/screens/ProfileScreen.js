@@ -9,6 +9,11 @@ import { listMyOrders } from '../actions/orderActions';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders the profile screen, which displays the user's profile information and order history.
+ *
+ * @return {React.Element} The rendered profile screen.
+ */
 const ProfileScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

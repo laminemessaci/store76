@@ -7,6 +7,11 @@ import { login } from './../actions/userActions';
 import Message from '../components/Message.js';
 import Loader from '../components/Loader.js';
 
+/**
+ * Renders the login screen.
+ *
+ * @returns {JSX.Element} The login screen component.
+ */
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +34,11 @@ const LoginScreen = () => {
     }
   }, [userInfo, redirect]);
 
+  /**
+   * Handles the submit event for the form.
+   *
+   * @param {object} e - The event object.
+   */
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));

@@ -4,6 +4,12 @@ import { Card } from 'react-bootstrap';
 import Rating from './Rating.js';
 import { Link } from 'react-router-dom';
 
+/**
+ * Renders a product card component.
+ *
+ * @param {Object} product - The product object to be rendered.
+ * @return {JSX.Element} The rendered product card component.
+ */
 const Product = ({ product }) => {
   return (
     <Card className="my-3 p-3 rounded">

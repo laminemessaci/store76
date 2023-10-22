@@ -1,6 +1,11 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
 
+/**
+ * Returns a loading spinner component.
+ *
+ * @return {JSX.Element} The loading spinner component.
+ */
 const Loader = () => {
   return (
     <Spinner

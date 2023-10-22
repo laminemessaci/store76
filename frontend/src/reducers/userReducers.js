@@ -26,6 +26,13 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
 
+/**
+ * Reducer function for user login.
+ *
+ * @param {object} state - The current state of the application.
+ * @param {object} action - The action object that contains the type and payload.
+ * @return {object} The updated state after handling the action.
+ */
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
@@ -41,6 +48,13 @@ export const userLoginReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for user registration.
+ *
+ * @param {object} state - The current state of the reducer.
+ * @param {object} action - The action object.
+ * @return {object} The updated state.
+ */
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
@@ -56,6 +70,13 @@ export const userRegisterReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for managing user details in the state.
+ *
+ * @param {object} state - The current state object.
+ * @param {object} action - The action object.
+ * @return {object} The updated state object.
+ */
 export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
@@ -70,6 +91,13 @@ export const userDetailsReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
+/**
+ * Updates the user profile in the state based on the given action type.
+ *
+ * @param {object} state - The current state of the user profile.
+ * @param {object} action - The action object containing the type and payload.
+ * @return {object} The updated state of the user profile.
+ */
 export const userUpdateProfileReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_UPDATE_PROFILE_REQUEST:
@@ -85,6 +113,13 @@ export const userUpdateProfileReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for managing the user list state.
+ *
+ * @param {object} state - The current state of the reducer.
+ * @param {object} action - The action object being dispatched.
+ * @return {object} The updated state after applying the action.
+ */
 export const userListReducer = (state = { users: [] }, action) => {
   switch (action.type) {
     case USER_LIST_REQUEST:
@@ -100,6 +135,13 @@ export const userListReducer = (state = { users: [] }, action) => {
   }
 };
 
+/**
+ * Reducer function for deleting a user.
+ *
+ * @param {object} state - The current state of the application.
+ * @param {object} action - The action object that contains the type and payload.
+ * @return {object} The updated state after deleting a user.
+ */
 export const userDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_DELETE_REQUEST:
@@ -113,6 +155,13 @@ export const userDeleteReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for updating user state.
+ *
+ * @param {object} state - The current state of the user.
+ * @param {object} action - The action object containing the type and payload.
+ * @return {object} The updated state of the user.
+ */
 export const userUpdateReducer = (state = { user: {} }, action) => {
   switch (action.type) {
     case USER_UPDATE_REQUEST:

@@ -23,6 +23,13 @@ import {
   ORDER_DELIVER_RESET,
 } from '../constants/orderConstants';
 
+/**
+ * Reducer function for creating an order.
+ *
+ * @param {Object} state - The current state.
+ * @param {Object} action - The action object.
+ * @return {Object} The updated state.
+ */
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
@@ -47,6 +54,13 @@ export const orderCreateReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function to handle the state of order details.
+ *
+ * @param {Object} state - The current state of the order details.
+ * @param {Object} action - The action object that contains the type and payload.
+ * @return {Object} The updated state of the order details.
+ */
 export const orderDetailsReducer = (
   state = { loading: true, orderItems: [], shippingAddress: {} },
   action
@@ -72,6 +86,13 @@ export const orderDetailsReducer = (
   }
 };
 
+/**
+ * Reducer function for handling the state updates related to order payment.
+ *
+ * @param {object} state - The current state of the application.
+ * @param {object} action - The action object dispatched to the reducer.
+ * @return {object} The updated state after processing the action.
+ */
 export const orderPayReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_PAY_REQUEST:
@@ -94,6 +115,13 @@ export const orderPayReducer = (state = {}, action) => {
       return state;
   }
 };
+/**
+ * Reducer function for ordering delivery.
+ *
+ * @param {object} state - The current state.
+ * @param {object} action - The action object.
+ * @return {object} The new state.
+ */
 export const orderDeliverReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELIVER_REQUEST:
@@ -117,6 +145,13 @@ export const orderDeliverReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Generates a function comment for the given function body.
+ *
+ * @param {Object} state - The current state of the reducer.
+ * @param {Object} action - The action object that triggered the reducer.
+ * @return {Object} The updated state after applying the reducer logic.
+ */
 export const orderListMyReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_MY_REQUEST:
@@ -140,6 +175,13 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
   }
 };
 
+/**
+ * Reducer function for ordering a list.
+ *
+ * @param {Object} state - The current state of the reducer.
+ * @param {Object} action - The action object.
+ * @return {Object} The updated state after applying the action.
+ */
 export const orderListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case ORDER_LIST_REQUEST:

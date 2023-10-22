@@ -6,6 +6,12 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { saveShippingAddress } from '../actions/cartActions';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders the Shipping Screen component.
+ *
+ * @param {Object} history - The history object for navigation.
+ * @return {JSX.Element} The JSX element representing the Shipping Screen.
+ */
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;

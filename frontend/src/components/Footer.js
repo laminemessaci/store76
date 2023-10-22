@@ -1,6 +1,11 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
+/**
+ * Renders the footer component.
+ *
+ * @return {JSX.Element} The rendered footer component.
+ */
 function Footer() {
   return (
     <footer>

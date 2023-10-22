@@ -13,6 +13,12 @@ import {
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 import { useNavigate, useParams } from 'react-router-dom';
 
+
+/**
+ * Renders the ProductListScreen component.
+ *
+ * @return {JSX.Element} The rendered component.
+ */
 const ProductListScreen = () => {
   const { pageNumber } = useParams() || 1;
   console.log('pageNumber: ', pageNumber);

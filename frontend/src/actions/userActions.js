@@ -27,6 +27,13 @@ import {
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants.js';
 
+/**
+ * Logs in a user with the given email and password.
+ *
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @return {Promise} A Promise that resolves to the logged in user's data.
+ */
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -62,6 +69,12 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+/**
+ * Logs out the user by removing the user information from local storage and redirecting to the login page.
+ *
+ * @param {function} dispatch - The dispatch function from the Redux store.
+ * @return {undefined} This function does not return anything.
+ */
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
 
@@ -73,6 +86,14 @@ export const logout = () => (dispatch) => {
   document.location.href = '/login';
 };
 
+/**
+ * Registers a user with the provided name, email, and password.
+ *
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ * @return {Promise} A Promise that resolves to the registered user's data.
+ */
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -113,6 +134,12 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
+/**
+ * Fetches the details of a user from the API.
+ *
+ * @param {string} id - The ID of the user to fetch details for.
+ * @return {Promise} A promise that resolves to the user details.
+ */
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -150,6 +177,12 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Updates the user profile.
+ *
+ * @param {Object} user - The user object containing the updated profile information.
+ * @returns {Promise} A promise that resolves to the updated user profile data.
+ */
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -193,6 +226,13 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Retrieves a list of users from the API.
+ *
+ * @param {function} dispatch - Redux dispatch function
+ * @param {function} getState - Redux getState function
+ * @return {Promise} A promise that resolves to the list of users
+ */
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -230,6 +270,12 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Deletes a user based on their ID.
+ *
+ * @param {string} id - The ID of the user to be deleted.
+ * @return {Promise} A promise that resolves when the user is successfully deleted.
+ */
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -264,6 +310,12 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Updates a user.
+ *
+ * @param {Object} user - The user object to be updated.
+ * @return {Promise} A promise that resolves with the updated user.
+ */
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({

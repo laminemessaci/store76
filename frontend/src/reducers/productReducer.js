@@ -25,6 +25,13 @@ import {
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants';
 
+/**
+ * Reducer function for handling the product list state.
+ *
+ * @param {object} state - The current state object with a "products" array.
+ * @param {object} action - The action object that contains the "type" property.
+ * @return {object} The updated state object based on the action type.
+ */
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
@@ -43,6 +50,13 @@ export const productListReducer = (state = { products: [] }, action) => {
   }
 };
 
+/**
+ * Reducer function for handling product details state.
+ *
+ * @param {object} state - The current state of the product details.
+ * @param {object} action - The action object dispatched to the reducer.
+ * @return {object} The new state after applying the action.
+ */
 export const productDetailsReducer = (
   state = { product: { reviews: [] } },
   action
@@ -59,6 +73,13 @@ export const productDetailsReducer = (
   }
 };
 
+/**
+ * Reducer function for deleting a product.
+ *
+ * @param {object} state - The current state of the application.
+ * @param {object} action - The action object that contains the type and payload.
+ * @return {object} The updated state after deleting the product.
+ */
 export const productDeleteReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_DELETE_REQUEST:
@@ -72,6 +93,13 @@ export const productDeleteReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for creating a product.
+ *
+ * @param {object} state - The current state of the reducer.
+ * @param {object} action - The action object that contains the type and payload.
+ * @return {object} The updated state after handling the action.
+ */
 export const productCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_CREATE_REQUEST:
@@ -87,6 +115,13 @@ export const productCreateReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for updating product state.
+ *
+ * @param {Object} state - The current state of the product.
+ * @param {Object} action - The action object containing the type and payload.
+ * @return {Object} The updated state of the product.
+ */
 export const productUpdateReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case PRODUCT_UPDATE_REQUEST:
@@ -102,6 +137,13 @@ export const productUpdateReducer = (state = { product: {} }, action) => {
   }
 };
 
+/**
+ * Generates a reducer function for creating a product review.
+ *
+ * @param {object} state - The current state of the reducer.
+ * @param {object} action - The action object containing the type and payload.
+ * @return {object} The updated state after handling the action.
+ */
 export const productReviewCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case PRODUCT_CREATE_REVIEW_REQUEST:
@@ -117,6 +159,13 @@ export const productReviewCreateReducer = (state = {}, action) => {
   }
 };
 
+/**
+ * Reducer function for handling the state of the top rated products.
+ *
+ * @param {Object} state - The current state of the reducer.
+ * @param {Object} action - The action object dispatched to the reducer.
+ * @return {Object} The updated state based on the action type.
+ */
 export const productTopRatedReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case PRODUCT_TOP_REQUEST:

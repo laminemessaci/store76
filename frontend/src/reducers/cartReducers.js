@@ -6,6 +6,13 @@ import {
   CART_CLEAR_ITEMS,
 } from '../constants/cartConstants';
 
+/**
+ * Reduces the state of the cart by applying the specified action.
+ *
+ * @param {object} state - The current state of the cart. Default is { cartItems: [], shippingAddress: {} }.
+ * @param {object} action - The action object containing the type and payload.
+ * @return {object} The new state of the cart after applying the action.
+ */
 export const cartReducer = (
   state = { cartItems: [], shippingAddress: {} },
   action

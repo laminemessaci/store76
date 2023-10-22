@@ -10,6 +10,12 @@ import Meta from '../components/Meta';
 import { listProducts } from '../actions/productActions';
 import ProductCarousel from './../components/ProductCarousel';
 
+/**
+ * Renders the HomeScreen component.
+ *
+ * @param {object} match - The object containing match information.
+ * @return {JSX.Element} The rendered HomeScreen component.
+ */
 const HomeScreen = ({ match }) => {
   const { keyword } = useParams();
 

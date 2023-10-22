@@ -6,6 +6,11 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
 
+/**
+ * Renders the header component.
+ *
+ * @return {JSX.Element} The header component.
+ */
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

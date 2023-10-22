@@ -7,6 +7,11 @@ import Loader from '../components/Loader';
 import { listUsers, deleteUser } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * Renders the User List Screen.
+ *
+ * @return {ReactNode} The rendered User List Screen component.
+ */
 const UserListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

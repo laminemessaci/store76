@@ -20,6 +20,11 @@ import UserEditScreen from './screens/UserEditScreen.js';
 import UserListScreen from './screens/UserListScreen.js';
 import OrderListScreen from './screens/OrderListScreen.js';
 
+/**
+ * Renders the main application component.
+ *
+ * @return {JSX.Element} The rendered main application component.
+ */
 const App = () => {
   return (
     <>
