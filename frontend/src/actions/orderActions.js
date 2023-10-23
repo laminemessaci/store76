@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { CART_CLEAR_ITEMS } from '../constants/cartConstants';
+import axios from "axios";
+import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -19,9 +19,8 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_REQUEST,
-} from '../constants/orderConstants';
-import { logout } from './userActions';
-
+} from "../constants/orderConstants";
+import { logout } from "./userActions";
 
 /**
  * Creates an order.
@@ -43,12 +42,16 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.post(`/api/orders`, order, config);
+    const { data } = await axios.post(
+      `https://store76-syb1.onrender.com/api/orders`,
+      order,
+      config
+    );
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -58,13 +61,13 @@ export const createOrder = (order) => async (dispatch, getState) => {
       type: CART_CLEAR_ITEMS,
       payload: data,
     });
-    localStorage.removeItem('cartItems');
+    localStorage.removeItem("cartItems");
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -96,7 +99,10 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/${id}`, config);
+    const { data } = await axios.get(
+      `https://store76-syb1.onrender.com/api/orders/${id}`,
+      config
+    );
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -107,7 +113,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -139,13 +145,13 @@ export const payOrder =
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
       const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
+        `https://store76-syb1.onrender.com/api/orders/${orderId}/pay`,
         paymentResult,
         config
       );
@@ -159,7 +165,7 @@ export const payOrder =
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message;
-      if (message === 'Not authorized, token failed') {
+      if (message === "Not authorized, token failed") {
         dispatch(logout());
       }
       dispatch({
@@ -192,7 +198,10 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders/myorders`, config);
+    const { data } = await axios.get(
+      `https://store76-syb1.onrender.com/api/orders/myorders`,
+      config
+    );
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
@@ -203,7 +212,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -212,7 +221,6 @@ export const listMyOrders = () => async (dispatch, getState) => {
     });
   }
 };
-
 
 /**
  * Retrieves a list of orders from the API.
@@ -237,7 +245,10 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/orders`, config);
+    const { data } = await axios.get(
+      `https://store76-syb1.onrender.com/api/orders`,
+      config
+    );
 
     dispatch({
       type: ORDER_LIST_SUCCESS,
@@ -248,7 +259,7 @@ export const listOrders = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -283,7 +294,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/orders/${order._id}/deliver`,
+      `https://store76-syb1.onrender.com/api/orders/${order._id}/deliver`,
       {},
       config
     );
@@ -297,7 +308,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -21,8 +21,8 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
-} from '../constants/productConstants';
-import { logout } from './userActions';
+} from "../constants/productConstants";
+import { logout } from "./userActions";
 
 /**
  * Fetches a list of products from the API based on a keyword and page number.
@@ -32,13 +32,13 @@ import { logout } from './userActions';
  * @return {Promise} A promise that resolves to the fetched product list.
  */
 export const listProducts =
-  (keyword = '', pageNumber = '') =>
+  (keyword = "", pageNumber = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `https://store76-syb1.onrender.com/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({
@@ -66,7 +66,9 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/products/${id}`);
+    const { data } = await axios.get(
+      `https://store76-syb1.onrender.com/api/products/${id}`
+    );
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -105,7 +107,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/products/${id}`, config);
+    await axios.delete(
+      `https://store76-syb1.onrender.com/api/products/${id}`,
+      config
+    );
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
@@ -115,7 +120,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -148,7 +153,11 @@ export const createProduct = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/products`, {}, config);
+    const { data } = await axios.post(
+      `https://store76-syb1.onrender.com/api/products`,
+      {},
+      config
+    );
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
@@ -159,7 +168,7 @@ export const createProduct = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -187,13 +196,13 @@ export const updateProduct = (product) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
     const { data } = await axios.put(
-      `/api/products/${product._id}`,
+      `https://store76-syb1.onrender.com/api/products/${product._id}`,
       product,
       config
     );
@@ -208,7 +217,7 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
+    if (message === "Not authorized, token failed") {
       dispatch(logout());
     }
     dispatch({
@@ -240,12 +249,16 @@ export const createProductReview =
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
-      await axios.post(`/api/products/${productId}/reviews`, review, config);
+      await axios.post(
+        `https://store76-syb1.onrender.com/api/products/${productId}/reviews`,
+        review,
+        config
+      );
 
       dispatch({
         type: PRODUCT_CREATE_REVIEW_SUCCESS,
@@ -255,7 +268,7 @@ export const createProductReview =
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message;
-      if (message === 'Not authorized, token failed') {
+      if (message === "Not authorized, token failed") {
         dispatch(logout());
       }
       dispatch({
@@ -275,7 +288,9 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST });
 
-    const { data } = await axios.get(`/api/products/top`);
+    const { data } = await axios.get(
+      `https://store76-syb1.onrender.com/api/products/top`
+    );
 
     dispatch({
       type: PRODUCT_TOP_SUCCESS,
