@@ -1,6 +1,6 @@
 {
   "name": "store76",
-  "proxy": "https://store76-api.onrender.com/",
+  "proxy": "https://store76-api.onrender.com",
   "version": "0.1.0",
   "private": true,
   "engines": {
