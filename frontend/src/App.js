@@ -23,9 +23,6 @@ import axios from "axios";
 
 const App = () => {
   axios.defaults.baseURL = "https://store76-api.onrender.com/";
-  axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
-  axios.defaults.headers.common["Access-Control-Allow-Methods"] =
-    "GET,PUT,POST,DELETE,PATCH,OPTIONS";
   return (
     <>
       <Header />
