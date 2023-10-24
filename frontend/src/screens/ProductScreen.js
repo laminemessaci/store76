@@ -185,7 +185,7 @@ const ProductScreen = () => {
                     <Message variant="danger">{errorProductReview}</Message>
                   )}
                   {userInfo ? (
-                    <Form onSubmit={submitHandler}>
+                    <Form className='bg-dark p-2 rounded-1 d-flex justify-content-center flex-column' onSubmit={submitHandler}>
                       <Form.Group controlId="rating">
                         <Form.Label>Rating</Form.Label>
                         <Form.Control
@@ -210,7 +210,9 @@ const ProductScreen = () => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
+
                       <Button
+                      className='my-3 mx-2'
                         disabled={loadingProductReview}
                         type="submit"
                         variant="primary"
