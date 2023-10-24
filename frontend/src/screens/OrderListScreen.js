@@ -68,7 +68,7 @@ const OrderListScreen = () => {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/order/${order._id}`}>
+                  <LinkContainer className='btn-sm d-flex justify-content-center' to={`/order/${order._id}`}>
                     <Button variant='light' className='btn-sm'>
                       Details
                     </Button>

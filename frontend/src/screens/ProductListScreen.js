@@ -114,9 +114,9 @@ const ProductListScreen = () => {
                   <td>${product.price}</td>
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
-                  <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="light" className="btn-sm">
+                  <td className='d-flex justify-content-center '>
+                    <LinkContainer className='btn btn-sm mx-2' to={`/admin/product/${product._id}/edit`}>
+                      <Button variant="primary" className="btn-sm">
                         <i className="fas fa-edit"></i>
                       </Button>
                     </LinkContainer>

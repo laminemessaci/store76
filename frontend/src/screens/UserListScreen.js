@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import { listUsers, deleteUser } from '../actions/userActions';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { LinkContainer } from "react-router-bootstrap";
+import { Table, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { listUsers, deleteUser } from "../actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
@@ -25,12 +25,12 @@ const UserListScreen = () => {
       dispatch(listUsers());
     } else {
       // history.push('/login')
-      navigate('/login');
+      navigate("/login");
     }
   }, [dispatch, navigate, successDelete, userInfo]);
 
   const deleteHandler = (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm("Are you sure")) {
       dispatch(deleteUser(id));
       dispatch(listUsers());
     }
@@ -38,7 +38,7 @@ const UserListScreen = () => {
 
   return (
     <>
-      <h1>Users</h1>
+      <h1>Users List</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -64,14 +64,17 @@ const UserListScreen = () => {
                 </td>
                 <td>
                   {user.isAdmin ? (
-                    <i className="fas fa-check" style={{ color: 'green' }}></i>
+                    <i className="fas fa-check" style={{ color: "green" }}></i>
                   ) : (
-                    <i className="fas fa-times" style={{ color: 'red' }}></i>
+                    <i className="fas fa-times" style={{ color: "red" }}></i>
                   )}
                 </td>
-                <td>
-                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
-                    <Button variant="light" className="btn-sm">
+                <td className="text-center  d-flex justify-content-center">
+                  <LinkContainer
+                    className="btn btn-sm mx-2"
+                    to={`/admin/user/${user._id}/edit`}
+                  >
+                    <Button variant="primary" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>
                   </LinkContainer>

@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
-import { getUserDetails, updateUser } from '../actions/userActions';
-import { USER_UPDATE_RESET } from '../constants/userConstants';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import FormContainer from "../components/FormContainer";
+import { getUserDetails, updateUser } from "../actions/userActions";
+import { USER_UPDATE_RESET } from "../constants/userConstants";
 
 const UserEditScreen = ({ match, history }) => {
-  const {id: userId} = useParams()
+  const { id: userId } = useParams();
   // console.log(' == id' ,userId)
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const UserEditScreen = ({ match, history }) => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
       // history.push('/admin/userlist')
-      navigate('/admin/userlist');
+      navigate("/admin/userlist");
     } else {
       if (!user.name || user._id !== userId) {
         dispatch(getUserDetails(userId));
@@ -55,7 +55,7 @@ const UserEditScreen = ({ match, history }) => {
       <Link to="/admin/userlist" className="btn btn-light my-3">
         Go Back
       </Link>
-      <FormContainer>
+      <FormContainer className="container-fluid">
         <h1>Edit User</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
@@ -65,7 +65,7 @@ const UserEditScreen = ({ match, history }) => {
           <Message variant="danger">{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
+            <Form.Group className="mb-3   " controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
@@ -87,6 +87,7 @@ const UserEditScreen = ({ match, history }) => {
 
             <Form.Group controlId="isadmin">
               <Form.Check
+              className=" m-2"
                 type="checkbox"
                 label="Is Admin"
                 checked={isAdmin}
