@@ -110,7 +110,7 @@ const ProductEditScreen = () => {
           <Message variant="danger">{error}</Message>
         ) : (
           <Form className="bg-dark p-4" onSubmit={submitHandler}>
-            <Form.Group controlId="name">
+            <Form.Group className="mb-2" controlId="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
@@ -120,7 +120,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="price">
+            <Form.Group className="mb-2" controlId="price">
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type="number"
@@ -130,7 +130,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="image">
+            <Form.Group className="mb-2" controlId="image">
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
@@ -139,6 +139,7 @@ const ProductEditScreen = () => {
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
               <Form.Control
+                className="mb-2"
                 type="file"
                 id="image-file"
                 label="Choose File"
@@ -148,7 +149,7 @@ const ProductEditScreen = () => {
               {uploading && <Loader />}
             </Form.Group>
 
-            <Form.Group controlId="brand">
+            <Form.Group className="mb-2" controlId="brand">
               <Form.Label>Brand</Form.Label>
               <Form.Control
                 type="text"
@@ -158,7 +159,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="countInStock">
+            <Form.Group className="mb-2" controlId="countInStock">
               <Form.Label>Count In Stock</Form.Label>
               <Form.Control
                 type="number"
@@ -168,7 +169,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category">
+            <Form.Group className="mb-2" controlId="category">
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type="text"
