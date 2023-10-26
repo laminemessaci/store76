@@ -122,7 +122,7 @@ const ProfileScreen = () => {
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
         ) : (
-          <Table  bordered hover responsive className="table-sm text-light">
+          <Table bordered hover responsive className="table-sm text-light">
             <thead>
               <tr>
                 <th>ID</th>
@@ -133,7 +133,7 @@ const ProfileScreen = () => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="text-light">
               {orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>

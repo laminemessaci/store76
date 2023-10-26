@@ -5,14 +5,14 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
+
 import { listProductDetails, updateProduct } from "../actions/productActions";
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 import { useParams } from "react-router-dom";
 
-const ProductEditScreen = () => {
+const ProductEditScreen = (props) => {
   const { id: productId } = useParams();
-  console.log(" id === ", productId);
+  
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -29,6 +29,7 @@ const ProductEditScreen = () => {
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
+
   const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
@@ -39,7 +40,6 @@ const ProductEditScreen = () => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
-      // history.push('/admin/productlist')
       navigate("/admin/productlist");
     } else {
       if (!product.name || product._id !== productId) {
@@ -83,7 +83,7 @@ const ProductEditScreen = () => {
     e.preventDefault();
     dispatch(
       updateProduct({
-        _id: productId,
+        _id: productId.toString(),
         name,
         price,
         image,
@@ -120,7 +120,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group className="mb-2" controlId="price">
+            <Form.Group className="mb-2">
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type="number"
@@ -130,7 +130,7 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group className="mb-2" controlId="image">
+            <Form.Group controlId="image-file" className="mb-2">
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
@@ -141,7 +141,6 @@ const ProductEditScreen = () => {
               <Form.Control
                 className="mb-2"
                 type="file"
-                id="image-file"
                 label="Choose File"
                 custom
                 onChange={uploadFileHandler}

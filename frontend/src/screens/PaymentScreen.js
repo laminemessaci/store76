@@ -12,7 +12,6 @@ const PaymentScreen = () => {
   const navigate = useNavigate();
 
   if (!shippingAddress.address) {
-    // history.push('/shipping');
     navigate('/shipping');
   }
 
@@ -27,13 +26,14 @@ const PaymentScreen = () => {
   };
 
   return (
+    <div className=" bg-dark my-5 rounded-2 p-5 ">
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
-      <h1>Payment Method</h1>
+      <h1 className='text-center text-light'>Payment Method</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
-          <Form.Label as="legend">Select Method</Form.Label>
-          <Col>
+          <Form.Label className='text-light' as="legend">Select Method</Form.Label>
+          <Col className='text-light'>
             <Form.Check
               type="radio"
               label="PayPal or Credit Card"
@@ -59,6 +59,7 @@ const PaymentScreen = () => {
         </Button>
       </Form>
     </FormContainer>
+    </div>
   );
 };
 
