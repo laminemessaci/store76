@@ -44,7 +44,7 @@ const ProfileScreen = () => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, navigate, userInfo, user, success]);
+  }, [dispatch, navigate, userInfo, user, success, orders]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -47,7 +47,7 @@ const ProductScreen = () => {
       setRating(0);
       setComment('');
     }
-    if (!product._id || product._id !== id) {
+    if (!product?._id || product?._id !== id) {
       dispatch(listProductDetails(id));
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
