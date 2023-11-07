@@ -1,6 +1,8 @@
 # Store76
 
 Store76 is a full-stack e-commerce web application for the fictional "Store in 76 for Marie." It is built with the MERN (MongoDB, Express.js, React, Node.js) stack.
+## Demo 
+https://github.com/laminemessaci/store76/assets/60298344/b0aba79a-cde2-4570-af8b-9a440c4bbf53
 
 ## Backend Dependencies
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs): For password hashing and validation.
