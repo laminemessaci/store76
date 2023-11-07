@@ -81,6 +81,11 @@ const LoginScreen = () => {
             </Col>
           </Row>
         </div>
+        <Row className="py-3 justify-content-center">
+          <Col className="text-center text-light fs-6 ">
+            Username: "admin@example.com" Password: "123456"
+          </Col>
+        </Row>
       </FormContainer>
     </div>
   );
