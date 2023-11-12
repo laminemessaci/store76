@@ -4,8 +4,8 @@ Store76 is a full-stack e-commerce web application for the fictional "Store in 7
 ## Demo 
 
 
-https://github.com/laminemessaci/store76/assets/60298344/0d929ed7-f5bd-4039-bce3-8a75511c9007
 
+https://github.com/laminemessaci/store76/assets/60298344/053cfd68-81a7-49ca-a9d8-16cdaabb7d6a
 
 
 ## Backend Dependencies
